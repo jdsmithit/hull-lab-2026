@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>You Found a Bug. Now What?</h1>
+<p class="lead">Three hands-on labs on responsible disclosure. Everything runs on your machine, and every
+organisation, person and record in here is fictional.</p>
+
+{% if not team_name %}
+<div class="card sky">
+  <h3>Start here: name your team</h3>
+  <form method="post" action="{{ url_for('portal.set_team') }}">
+    <label for="name">Team name</label>
+    <input id="name" name="name" type="text" maxlength="40" required placeholder="e.g. Team Kraken">
+    <p><button type="submit">Save</button></p>
+  </form>
+</div>
+{% else %}
+<p>Team: <strong>{{ team_name }}</strong>.
+  <details style="display:inline"><summary>Change</summary>
+    <form method="post" action="{{ url_for('portal.set_team') }}">
+      <input name="name" type="text" maxlength="40" value="{{ team_name }}"> <button type="submit">Save</button>
+    </form>
+  </details>
+</p>
+{% endif %}
+
+<div class="note">Read the <a href="{{ url_for('portal.rules') }}">rules of engagement</a> before you start.
+Permission is your protection, even in a lab.</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Lab 1 · security.txt hunt</h3>
+    <p>10 minutes, pairs. Score ten organisations' disclosure readiness and find where you'd report to each.</p>
+    <a class="btn" href="{{ url_for('lab1.index') }}">Open Lab 1</a>
+  </div>
+  <div class="card">
+    <h3>Lab 2 · Triage game</h3>
+    <p>10 minutes, groups of four. You're the security team: sort 8 incoming reports.</p>
+    <a class="btn" href="{{ url_for('lab2.index') }}">Open Lab 2</a>
+  </div>
+  <div class="card">
+    <h3>Lab 3 · Find it, then report it</h3>
+    <p>15 minutes, pairs. Find a real bug in HullFerries, prove it with minimum access, then write it up.</p>
+    <a class="btn" href="{{ url_for('lab3.brief') }}">Open Lab 3</a>
+  </div>
+</div>
+{% endblock %}

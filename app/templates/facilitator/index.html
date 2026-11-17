@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Facilitator{% endblock %}
+{% block content %}
+<h1>Facilitator</h1>
+<p class="lead">This machine only. Answer keys, progress and reset.</p>
+
+<div class="grid">
+  <div class="card white"><div class="stat">{{ progress.lab1 }}/{{ orgs|length }}</div>Lab 1 answers saved</div>
+  <div class="card white"><div class="stat">{{ progress.lab2 }}/{{ cards|length }}</div>Lab 2 answers saved</div>
+  <div class="card white"><div class="stat">{{ soc.others }}</div>Lab 3: other records viewed ({{ soc.verdict[0] }})</div>
+  <div class="card white"><div class="stat">{{ 'Yes' if progress.lab3_report else 'No' }}</div>Lab 3 report saved</div>
+</div>
+
+<h2>Lab 1 answer key</h2>
+<div class="table-scroll"><table>
+  <tr><th>Organisation</th><th>Score</th><th>Lesson</th><th>Route</th></tr>
+  {% for o in orgs %}<tr><td>{{ o.name }}</td><td>{{ o.score }}</td><td>{{ o.lesson }}</td><td>{{ o.route }}</td></tr>{% endfor %}
+</table></div>
+
+<h2>Lab 2 answer key</h2>
+<div class="table-scroll"><table>
+  <tr><th>#</th><th>Report</th><th>Answer</th><th>Why</th></tr>
+  {% for c in cards %}<tr><td>{{ loop.index }}</td><td>{{ c.subject }}</td>
+    <td>{% for b in c.answer %}{{ buckets[b] }}{% if not loop.last %} or {% endif %}{% endfor %}</td><td>{{ c.why }}</td></tr>{% endfor %}
+</table></div>
+
+<h2>Lab 3</h2>
+<p>Bug: <code>GET /hullferries/api/bookings/&lt;id&gt;</code> doesn't check ownership. Own booking is 1041;
+any other ID from 1001 to 1400 returns another passenger plus the proof token <code>{{ proof }}</code>.</p>
+
+<h2>Reset this machine</h2>
+<p>Clears the team name, all answers, the Lab 3 log and the report.</p>
+<form method="post" action="{{ url_for('facilitator.reset') }}"><button class="danger" type="submit">Reset all lab data</button></form>
+<p><a href="{{ url_for('facilitator.logout') }}">Leave facilitator mode</a></p>
+{% endblock %}

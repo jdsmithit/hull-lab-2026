@@ -1,0 +1,36 @@
+{% extends "hullferries/base_hf.html" %}
+{% block title %}Vulnerability disclosure · HullFerries{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>Vulnerability disclosure policy</h1>
+  <p>HullFerries welcomes reports from security researchers and students taking part in today's lab.</p>
+
+  <h2>In scope</h2>
+  <ul>
+    <li>The HullFerries website and booking API under <code>/hullferries/</code> on your lab container</li>
+    <li>The test account you were given</li>
+  </ul>
+
+  <h2>Out of scope</h2>
+  <ul>
+    <li>The container itself: files, image and source code</li>
+    <li>Other teams' machines, the university network and any real company</li>
+    <li>Denial of service, brute-forcing logins, automated scanners</li>
+  </ul>
+
+  <h2>Rules</h2>
+  <ul>
+    <li>Use only the minimum access needed to prove an issue. Viewing <strong>one</strong> other
+        customer's record is enough. Stop there.</li>
+    <li>Don't keep, share or publish any customer data you see.</li>
+    <li>Report through the lab's report form, with steps a stranger could follow.</li>
+  </ul>
+
+  <h2>Safe harbour</h2>
+  <p>If you follow this policy in good faith, HullFerries will treat your research as authorised and will
+  not take action against you.</p>
+
+  <h2>Contact</h2>
+  <p><code>security@hullferries.test</code>. In this lab, use the report form instead.</p>
+</div>
+{% endblock %}

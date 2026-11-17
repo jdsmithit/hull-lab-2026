@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ org.name }}</title>
+<style>
+  body { margin: 0; font: 16px/1.55 Georgia, "Times New Roman", serif; color: #222; background: #fafafa; }
+  header { background: {{ org.color }}; color: #fff; padding: 18px 16px; }
+  header a { color: #fff; text-decoration: none; font-size: 22px; font-weight: bold; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  .lab { font: 13px system-ui, sans-serif; background: #fff7c2; padding: 6px 16px; }
+</style>
+</head>
+<body>
+<div class="lab">Lab 1 · fictional organisation · not a real company</div>
+<header><a href="{{ base }}/">{{ org.name }}</a></header>
+<main>{{ content|safe }}</main>
+</body>
+</html>

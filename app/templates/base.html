@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Disclosure Labs{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="{{ url_for('portal.index') }}">You Found a Bug. Now What? · Labs</a>
+    <a href="{{ url_for('portal.rules') }}">Rules</a>
+    <a href="{{ url_for('lab1.index') }}">Lab 1</a>
+    <a href="{{ url_for('lab2.index') }}">Lab 2</a>
+    <a href="{{ url_for('lab3.brief') }}">Lab 3</a>
+    {% if team_name %}<span class="team">{{ team_name }}</span>{% endif %}
+  </div>
+</header>
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

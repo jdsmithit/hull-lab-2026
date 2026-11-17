@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Facilitator{% endblock %}
+{% block content %}
+<h1>Facilitator</h1>
+<form method="post" style="max-width:320px">
+  {% if error %}<p class="no">{{ error }}</p>{% endif %}
+  <label for="pin">PIN</label>
+  <input id="pin" name="pin" type="password" autocomplete="off" required>
+  <p><button type="submit">Enter</button></p>
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Lab 3 · Your report{% endblock %}
+{% block content %}
+<h1>Your report</h1>
+<p class="lead">Saved. Download it and email it to <a href="mailto:John.smith@dfds.com?subject=HullFerries%20lab%20report">John.smith@dfds.com</a> with your team name in the subject, then try the stretch task.</p>
+<p><a class="btn" href="{{ url_for('lab3.report_md') }}">Download as Markdown</a>
+   <a class="btn secondary" href="{{ url_for('lab3.report') }}">Edit report</a></p>
+
+<pre>{{ body }}</pre>
+
+<h2>Self-check before you send</h2>
+<div class="table-scroll"><table>
+  <tr><th>Criterion</th><th>Points</th></tr>
+  {% for c, p in rubric %}<tr><td>{{ c }}</td><td>{{ p }}</td></tr>{% endfor %}
+</table></div>
+
+<div class="note"><strong>Stretch:</strong> swap with the next pair and triage their report in 60 seconds.
+Would it be "Act today"?</div>
+{% endblock %}

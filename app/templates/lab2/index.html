@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Lab 2 · Triage game{% endblock %}
+{% block content %}
+<h1>Lab 2 · Triage game</h1>
+<p class="lead">10 minutes, groups of four. You're the security team on a Monday morning. For each report,
+pick a bucket and give one reason.</p>
+
+<div class="grid">
+  {% for key, label in buckets.items() %}<div class="card white"><strong>{{ label }}</strong></div>{% endfor %}
+</div>
+
+<form method="post" action="{{ url_for('lab2.submit') }}">
+{% for c in cards %}
+{% set a = answers.get(c.id) %}
+<div class="report-card">
+  <div class="meta">Report {{ loop.index }} of {{ cards|length }} · From: {{ c['from'] }}</div>
+  <div class="subject">{{ c.subject }}</div>
+  <p>{{ c.body }}</p>
+  <div class="row">
+    <div>
+      <label for="bucket_{{ c.id }}">Bucket</label>
+      <select id="bucket_{{ c.id }}" name="bucket_{{ c.id }}">
+        <option value="">Choose…</option>
+        {% for key, label in buckets.items() %}
+        <option value="{{ key }}" {% if a and a.bucket == key %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="reason_{{ c.id }}">One reason</label>
+      <input id="reason_{{ c.id }}" type="text" name="reason_{{ c.id }}" value="{{ a.reason if a else '' }}">
+    </div>
+  </div>
+</div>
+{% endfor %}
+<p><button type="submit">Submit our triage</button></p>
+</form>
+{% endblock %}

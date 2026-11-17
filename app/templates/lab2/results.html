@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Lab 2 · results{% endblock %}
+{% block content %}
+<h1>Lab 2 · results</h1>
+<p class="lead">You triaged <strong>{{ correct }} of {{ cards|length }}</strong> reports the way a security
+team would.</p>
+
+{% for c in cards %}
+{% set a = answers.get(c.id) %}
+{% set right = a and a.bucket in c.answer %}
+<div class="report-card" style="background:{{ 'var(--good-bg)' if right else 'var(--bad-bg)' }}">
+  <div class="meta">Report {{ loop.index }} · From: {{ c['from'] }}</div>
+  <div class="subject">{{ c.subject }}</div>
+  <p><span class="{{ 'ok' if right else 'no' }}">{{ '✓' if right else '✗' }}</span>
+     You said: <strong>{{ buckets[a.bucket] if a and a.bucket else 'nothing' }}</strong>
+     {% if a and a.reason %}<span class="hint">(“{{ a.reason }}”)</span>{% endif %}<br>
+     Answer: <strong>{% for b in c.answer %}{{ buckets[b] }}{% if not loop.last %} or {% endif %}{% endfor %}</strong></p>
+  <p>{{ c.why }}</p>
+</div>
+{% endfor %}
+
+<h2>Debrief</h2>
+<p><strong>Which card would you <em>be</em>?</strong> Keep that in mind for Lab 3.</p>
+<p><a class="btn secondary" href="{{ url_for('lab2.index') }}">Back to Lab 2</a></p>
+{% endblock %}

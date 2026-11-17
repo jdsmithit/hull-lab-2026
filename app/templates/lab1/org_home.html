@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ org.name }}</title>
+<style>
+  body { margin: 0; font: 16px/1.55 Georgia, "Times New Roman", serif; color: #222; background: #fafafa; }
+  header { background: {{ org.color }}; color: #fff; padding: 28px 16px; }
+  header h1 { margin: 0; font-size: 32px; }
+  main, footer > div { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  footer { background: #eee; border-top: 1px solid #ddd; font-size: 14px; }
+  footer a { color: {{ org.color }}; margin-right: 18px; }
+  .lab { font: 13px system-ui, sans-serif; background: #fff7c2; padding: 6px 16px; }
+</style>
+</head>
+<body>
+<div class="lab">Lab 1 · fictional organisation · not a real company</div>
+<header><h1>{{ org.name }}</h1><div>{{ org.sector }}</div></header>
+<main>
+  <h2>Welcome to {{ org.name }}</h2>
+  <p>Serving customers across the region with reliable, trusted {{ org.sector|lower }} services.</p>
+  <p>Our teams work every day to keep your information safe.</p>
+</main>
+<footer><div>
+  <a href="{{ base }}/">Home</a>
+  {% for label, path in org.footer %}<a href="{{ base }}/{{ path }}">{{ label }}</a>{% endfor %}
+  <p>&copy; {{ org.name }}. All rights reserved.</p>
+</div></footer>
+</body>
+</html>

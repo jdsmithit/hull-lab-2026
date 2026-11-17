@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Lab 1 · security.txt hunt{% endblock %}
+{% block content %}
+<h1>Lab 1 · security.txt hunt</h1>
+<p class="lead">10 minutes, in pairs. For each organisation: find its security.txt, score it, and write down
+where you'd send a report.</p>
+
+<h2>How to fetch a file</h2>
+<pre><code>curl -i {{ request.host_url }}o/brightwater-bank/.well-known/security.txt</code></pre>
+<p class="hint">Use <code>-i</code> to see the headers too: the Content-Type matters. On Windows, type
+<code>curl.exe</code> instead of <code>curl</code>, or just open the URL in a browser. No file at
+<code>/.well-known/</code>? Try <code>/security.txt</code>, then look around the website itself.</p>
+
+<h2>Scoring card (max 7)</h2>
+<div class="table-scroll"><table>
+  <tr><th>Check</th><th>Points</th></tr>
+  {% for check, pts in rubric %}<tr><td>{{ check }}</td><td>{{ pts }}</td></tr>{% endfor %}
+</table></div>
+<p class="hint">"Policy link that works" means the link opens a real page. Click it.</p>
+
+<h2>The organisations</h2>
+<form method="post" action="{{ url_for('lab1.submit') }}">
+<div class="table-scroll"><table>
+  <tr><th>Organisation</th><th style="width:110px">Score</th><th>Where would you report?</th></tr>
+  {% for o in orgs %}
+  {% set a = answers.get(o.slug) %}
+  <tr>
+    <td><strong>{{ o.name }}</strong> <span class="hint">({{ o.sector }})</span><br>
+      <a href="{{ url_for('orgs.org_site', slug=o.slug, path='') }}" target="_blank" rel="noopener">{{ request.host_url }}o/{{ o.slug }}/</a><br>
+      <span class="hint">or <a href="http://{{ o.slug }}.localhost:{{ port }}/" target="_blank" rel="noopener">http://{{ o.slug }}.localhost:{{ port }}/</a></span></td>
+    <td><select name="score_{{ o.slug }}" aria-label="Score for {{ o.name }}">
+      <option value="">–</option>
+      {% for n in range(0, 8) %}<option value="{{ n }}" {% if a and a.score == n %}selected{% endif %}>{{ n }}</option>{% endfor %}
+    </select></td>
+    <td><input type="text" name="route_{{ o.slug }}" aria-label="Report route for {{ o.name }}"
+               value="{{ a.route if a else '' }}" placeholder="e.g. email address, page, or 'none found'"></td>
+  </tr>
+  {% endfor %}
+</table></div>
+<p><button type="submit">Check our answers</button></p>
+</form>
+
+<details><summary>Extension for fast pairs</summary>
+<p>Write a valid security.txt for a fictional student society. It must have a Contact and an Expires less
+than a year from today. Bonus: add a Policy and Preferred-Languages.</p>
+</details>
+{% endblock %}

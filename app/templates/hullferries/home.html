@@ -1,0 +1,12 @@
+{% extends "hullferries/base_hf.html" %}
+{% block content %}
+<div class="hero">
+  <h1>Cross the North Sea in comfort</h1>
+  <p>Overnight sailings from Kingston Quay to Nordhaven and Vesterby. Cabins, cars and breakfast included.</p>
+  <a class="btn" href="{{ url_for('hullferries.my_bookings') }}">Manage my booking</a>
+</div>
+<div class="panel">
+  <h2>Already booked?</h2>
+  <p>Log in to see your booking, passenger details and cabin.</p>
+</div>
+{% endblock %}

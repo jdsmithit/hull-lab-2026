@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Lab 3 · Write the report{% endblock %}
+{% block content %}
+<h1>Write the report</h1>
+<p class="lead">Under 300 words. Write for a tired triager on their tenth report of the day.</p>
+
+<form method="post" action="{{ url_for('lab3.report') }}">
+{% for key, label, hint in fields %}
+  <label for="{{ key }}">{{ label }}</label>
+  <p class="hint">{{ hint }}</p>
+  {% if key == 'title' %}
+  <input id="{{ key }}" name="{{ key }}" type="text" value="{{ values.get(key, '') }}" maxlength="200">
+  {% else %}
+  <textarea id="{{ key }}" name="{{ key }}">{{ values.get(key, '') }}</textarea>
+  {% endif %}
+{% endfor %}
+<p><button type="submit">Save report</button></p>
+</form>
+
+<h2>How it will be marked</h2>
+<div class="table-scroll"><table>
+  <tr><th>Criterion</th><th>Points</th></tr>
+  {% for c, p in rubric %}<tr><td>{{ c }}</td><td>{{ p }}</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

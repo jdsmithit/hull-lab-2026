@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Lab 3 · SOC view{% endblock %}
+{% block content %}
+<h1>The SOC seat</h1>
+<p class="lead">This is what HullFerries' security team saw of your testing.</p>
+
+<div class="grid">
+  <div class="card white"><div class="stat">{{ s.total }}</div>API requests you made</div>
+  <div class="card white"><div class="stat">{{ s.others }}</div>Other customers' records you viewed</div>
+  <div class="card white"><div class="stat">{{ s.errors }}</div>Errors you triggered (401 / 404)</div>
+</div>
+
+<div class="card {{ 'sky' if s.others <= 1 else '' }}" style="margin-top:16px;{% if s.others > 10 %}background:var(--bad-bg){% endif %}">
+  <div class="verdict">{{ s.verdict[0] }}</div>
+  <p>{{ s.verdict[1] }}</p>
+  {% if s.first %}<p class="hint">First request {{ s.first }} UTC · last request {{ s.last }} UTC</p>{% endif %}
+</div>
+
+<h2>Our access log (latest 25)</h2>
+{% if s.recent %}
+<pre>{% for r in s.recent %}{{ r.ts }}  {{ r.method }} {{ r.path }}  {{ r.status }}
+{% endfor %}</pre>
+{% else %}<p>No API requests yet.</p>{% endif %}
+
+<h2>Discuss</h2>
+<ul>
+  <li>How many records did you need to prove the bug? How many did you view?</li>
+  <li>If you were on the SOC, would this log look like a researcher or an attacker?</li>
+  <li>Did your report reach the security team before this alert did?</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Lab 1 · results{% endblock %}
+{% block content %}
+<h1>Lab 1 · results</h1>
+<p class="lead">You scored <strong>{{ correct }} of {{ orgs|length }}</strong> organisations exactly right.</p>
+
+<div class="table-scroll"><table>
+  <tr><th>Organisation</th><th>Your score</th><th>Correct</th><th>The lesson</th><th>Where to report</th></tr>
+  {% for o in orgs %}
+  {% set a = answers.get(o.slug) %}
+  {% set right = a and a.score == o.score %}
+  <tr class="{{ 'good' if right else 'bad' }}">
+    <td><strong>{{ o.name }}</strong></td>
+    <td>{{ a.score if a and a.score is not none else '–' }}</td>
+    <td>{{ o.score }} <span class="{{ 'ok' if right else 'no' }}">{{ '✓' if right else '✗' }}</span></td>
+    <td>{{ o.lesson }}</td>
+    <td>{{ o.route }}{% if a and a.route %}<br><span class="hint">You said: {{ a.route }}</span>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table></div>
+
+<h2>Debrief</h2>
+<ul>
+  <li>Which organisation had the best file? Which one would you trust least?</li>
+  <li>Which one did you nearly miss because you only checked <code>/.well-known/</code>?</li>
+  <li>For Kingston Rail, where would your report actually go?</li>
+</ul>
+<p><a class="btn secondary" href="{{ url_for('lab1.index') }}">Back to Lab 1</a></p>
+{% endblock %}

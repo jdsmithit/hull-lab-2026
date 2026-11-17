@@ -1,0 +1,25 @@
+{% extends "hullferries/base_hf.html" %}
+{% block title %}My bookings · HullFerries{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>My booking</h1>
+  <div id="booking">Loading…</div>
+</div>
+<script>
+  const labels = {booking_id: "Booking", passenger: "Passenger", passport_number: "Passport",
+                  date_of_birth: "Date of birth", route: "Route", sailing: "Sailing",
+                  cabin: "Cabin", vehicle: "Vehicle", email: "Email"};
+  fetch("{{ url_for('hullferries.api_booking', booking_id=booking_id) }}")
+    .then(r => r.json())
+    .then(b => {
+      const dl = document.createElement("dl");
+      for (const [k, label] of Object.entries(labels)) {
+        const dt = document.createElement("dt"); dt.textContent = label;
+        const dd = document.createElement("dd"); dd.textContent = b[k] ?? "";
+        dl.append(dt, dd);
+      }
+      const box = document.getElementById("booking"); box.textContent = ""; box.append(dl);
+    })
+    .catch(() => { document.getElementById("booking").textContent = "Could not load your booking."; });
+</script>
+{% endblock %}
